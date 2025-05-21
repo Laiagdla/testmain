@@ -6,7 +6,7 @@
 /*   By: lgrobe-d <lgrobe-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:35:58 by lgrobe-d          #+#    #+#             */
-/*   Updated: 2025/05/21 13:20:35 by lgrobe-d         ###   ########.fr       */
+/*   Updated: 2025/05/21 15:19:51 by lgrobe-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,11 +271,19 @@ int	test_atoi(void)
 
 int	test_strdup(void)
 {
+	// char	*src = "hello";
+	// char	*dest;
+
+	// dest = strdup(src);
+	// printf("%s\n", dest);
 	return (0);
 }
 
 int	test_calloc(void)
 {
+	void * d1 = ft_calloc(20, sizeof(int));
+	void * d2 = calloc(20, sizeof(int));
+	assert(memcmp(d1, d2, 20 * sizeof(int)) == 0);
 	return (0);
 }
 
@@ -283,6 +291,18 @@ int	test_calloc(void)
 
 int	test_substr(void)
 {
+	char	*s1 = "i just want this part #############";
+	size_t	size1 = 22;
+	char	*r1 = ft_substr(s1, 0, size1);
+	char	*ex1 = "i just want this part ";
+	assert(strcmp(r1, ex1) == 0);
+	// printf("%s\n", r1);
+	char	*s2 = "";
+	size_t	size2 = 0;
+	char	*r2 = ft_substr(s2, 5, size2);
+	char	*ex2 = "";
+	assert(strcmp(r2, ex2) == 0);
+	// printf("%s\n", r2);
 	return (0);
 }
 
@@ -336,8 +356,16 @@ int	test_itoa(void)
 	return (0);
 }
 
+char	f_strmapi(unsigned i, char s) { s = i + '0'; return (s); }
+
 int	test_strmapi(void)
 {
+	char b1[] = "override this !";
+	char *r1;
+	r1 = ft_strmapi(b1, f_strmapi);
+	// printf("%s\n", r1);
+	char e1[] = "0123456789:;<=>";
+	assert(ft_strncmp(r1, e1, ft_strlen(b1)) == 0);
 	return (0);
 }
 
@@ -398,15 +426,15 @@ int	main(void)
 	printf(GREEN "%d ft_strlcpy		OK\n" RESET, test_strlcpy());
 	printf(GREEN "%d ft_strlcat		OK\n" RESET, test_strlcat());
 	printf(GREEN "%d ft_bzero		OK\n" RESET, test_bzero());
-	printf(GREEN "%d ft_atoi		OK	TODO\n" RESET, test_atoi());
-	printf(GREEN "%d ft_strdup		OK	TODO\n" RESET, test_strdup());
-	printf(GREEN "%d ft_calloc		OK	TODO\n" RESET, test_calloc());
-	printf(GREEN "%d ft_substr		OK	TODO\n" RESET, test_substr());
-	printf(GREEN "%d ft_strjoin		OK	TODO\n" RESET, test_strjoin());
-	printf(GREEN "%d ft_strtrim		OK	TODO\n" RESET, test_strtrim());
-	printf(GREEN "%d ft_split		OK	TODO\n" RESET, test_split());
-	printf(GREEN "%d ft_itoa		OK	TODO\n" RESET, test_itoa());
-	printf(GREEN "%d ft_strmapi		OK	TODO\n" RESET, test_strmapi());
+	printf(GREEN "%d ft_atoi		OK\n" RESET, test_atoi());
+	printf(GREEN "%d ft_strdup		OK\n" RESET, test_strdup());
+	printf(GREEN "%d ft_calloc		OK\n" RESET, test_calloc());
+	printf(GREEN "%d ft_substr		OK\n" RESET, test_substr());
+	printf(GREEN "%d ft_strjoin		OK\n" RESET, test_strjoin());
+	printf(GREEN "%d ft_strtrim		OK\n" RESET, test_strtrim());
+	printf(GREEN "%d ft_split		OK\n" RESET, test_split());
+	printf(GREEN "%d ft_itoa		OK\n" RESET, test_itoa());
+	printf(GREEN "%d ft_strmapi		OK\n" RESET, test_strmapi());
 	printf(GREEN "%d ft_striteri		OK\n" RESET, test_striteri());
 	printf(GREEN "%d ft_putchar_fd		OK\n" RESET, test_putchar_fd());
 	printf(GREEN "%d ft_putstr_fd		OK\n" RESET, test_putstr_fd());
