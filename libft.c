@@ -6,7 +6,7 @@
 /*   By: lgrobe-d <lgrobe-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:35:58 by lgrobe-d          #+#    #+#             */
-/*   Updated: 2025/05/21 15:19:51 by lgrobe-d         ###   ########.fr       */
+/*   Updated: 2025/05/22 11:35:30 by lgrobe-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,31 @@
 #include <assert.h>
 #include <bsd/string.h>
 #include "includes/libft.h"
+
+#define RED  "\e[31m"
+#define GREEN  "\e[32m"
+#define YELLOW  "\e[33m"
+#define RESET "\e[0m"
+
+void	printassert(int i)
+{
+	if (i == 1)
+		printf(GREEN "ok\n" RESET);
+	else if (i == 0)
+		printf(RED "fail\n" RESET);
+	else
+		printf(YELLOW "unexpected\n" RESET);
+}
+
+int	checkassert(int i)
+{
+	if (i == 1)
+		return (1);
+	else if (i == 0)
+		return (0);
+	else
+		return(-1);
+}
 
 /* PART 1 */
 int	test_isalpha(void)
@@ -175,17 +200,26 @@ int	test_strnstr(void)
 	const char	*needle = "lin";
 	char		*ptr;
 
+	ft_strnstr("lorem ipsum dolor sit amet", "lorem", 15);
 	ptr = ft_strnstr(haystack, needle, 2);
 	assert(ptr == NULL);
 	ptr = ft_strnstr(haystack, needle, 20);
 	assert(ptr == haystack + 9);
 
-	char *s1 = "MZIRIBMZIRIBMZE123";
-	char *s2 = "MZIRIBMZE";
-	size_t max = strlen(s2);
-	char *i1 = strnstr(s1, s2, max);
-	char *i2 = ft_strnstr(s1, s2, max);
-	assert(i1 == i2);
+	char *s1_1 = "MZIRIBMZIRIBMZE123";
+	char *s1_2 = "MZIRIBMZE";
+	size_t max1 = strlen(s1_2);
+	char *i1_1 = strnstr(s1_1, s1_2, max1);
+	char *i1_2 = ft_strnstr(s1_1, s1_2, max1);
+	assert(i1_1 == i1_2);
+
+	char	*s2_1 = "oh no not the empty string !";
+	char	*s2_2 = "";
+	size_t	max2 = 0;
+
+	char	*i2_1 = strnstr(s2_1, s2_2, max2);
+	char	*i2_2 = ft_strnstr(s2_1, s2_2, max2);
+	printassert(i2_1 == i2_2);
 	// ft_strnstr(((void*)0), "fake", 0);
 	// printf("%s\n", i1);
 	// printf("%s\n", i2);
@@ -265,7 +299,72 @@ int	test_bzero(void)
 
 int	test_atoi(void)
 {
+	int i = 0;
+	i += checkassert(ft_atoi("0") == atoi("0"));
+	i += checkassert(ft_atoi("546:5") == atoi("546:5"));
+	i += checkassert(ft_atoi("-4886") == atoi("-4886"));
+	i += checkassert(ft_atoi("+548") == atoi("+548"));
+	i += checkassert(ft_atoi("054854") == atoi("054854"));
+	i += checkassert(ft_atoi("000074") == atoi("000074"));
+	i += checkassert(ft_atoi("+-54") == atoi("+-54"));
+	i += checkassert(ft_atoi("-+48") == atoi("-+48"));
+	i += checkassert(ft_atoi("--47") == atoi("--47"));
+	i += checkassert(ft_atoi("++47") == atoi("++47"));
+	i += checkassert(ft_atoi("+47+5") == atoi("+47+5"));
+	i += checkassert(ft_atoi("-47-5") == atoi("-47-5"));
+	i += checkassert(ft_atoi("\e475") == atoi("\e475"));
+	i += checkassert(ft_atoi("\t\n\r\v\f  469 \n") == atoi("\t\n\r\v\f  469 \n"));
+	i += checkassert(ft_atoi("-2147483648") == atoi("-2147483648"));
+	i += checkassert(ft_atoi("2147483647") == atoi("2147483647"));
+	i += checkassert(ft_atoi("\t\n\r\v\fd469 \n") == atoi("\t\n\r\v\fd469 \n"));
+	i += checkassert(ft_atoi("\n\n\n  -46\b9 \n5d6") == atoi("\n\n\n  -46\b9 \n5d6"));
+	i += checkassert(ft_atoi("") == atoi(""));
+	if (i  == 19)
+		return (1);
+	return (0);
+}
+
+int	test_atoi_print(void)
+{
 	ft_atoi("  -+232324");
+	printassert(ft_atoi("0") == atoi("0"));
+	printf("%d\n", ft_atoi("0"));
+	printassert(ft_atoi("546:5") == atoi("546:5"));
+	printf("%d\n", ft_atoi("546:5"));
+	printassert(ft_atoi("-4886") == atoi("-4886"));
+	printf("%d\n", ft_atoi("-4886"));
+	printassert(ft_atoi("+548") == atoi("+548"));
+	printf("%d\n", ft_atoi("+548"));
+	printassert(ft_atoi("054854") == atoi("054854"));
+	printf("%d\n", ft_atoi("054854"));
+	printassert(ft_atoi("000074") == atoi("000074"));
+	printf("%d\n", ft_atoi("000074"));
+	printassert(ft_atoi("+-54") == atoi("+-54"));
+	printf("%d\n", ft_atoi("+-54"));
+	printassert(ft_atoi("-+48") == atoi("-+48"));
+	printf("%d\n", ft_atoi("-+48"));
+	printassert(ft_atoi("--47") == atoi("--47"));
+	printf("%d\n", ft_atoi("--47"));
+	printassert(ft_atoi("++47") == atoi("++47"));
+	printf("%d\n", ft_atoi("++47"));
+	printassert(ft_atoi("+47+5") == atoi("+47+5"));
+	printf("%d\n", ft_atoi("+47+5"));
+	printassert(ft_atoi("-47-5") == atoi("-47-5"));
+	printf("%d\n", ft_atoi("-47-5"));
+	printassert(ft_atoi("\e475") == atoi("\e475"));
+	printf("%d\n", ft_atoi("\e475"));
+	printassert(ft_atoi("\t\n\r\v\f  469 \n") == atoi("\t\n\r\v\f  469 \n"));
+	printf("%d\n", ft_atoi("\t\n\r\v\f  469 \n"));
+	printassert(ft_atoi("-2147483648") == atoi("-2147483648"));
+	printf("%d\n", ft_atoi("-2147483648"));
+	printassert(ft_atoi("2147483647") == atoi("2147483647"));
+	printf("%d\n", ft_atoi("2147483647"));
+	printassert(ft_atoi("\t\n\r\v\fd469 \n") == atoi("\t\n\r\v\fd469 \n"));
+	printf("%d\n", ft_atoi("\t\n\r\v\fd469 \n"));
+	printassert(ft_atoi("\n\n\n  -46\b9 \n5d6") == atoi("\n\n\n  -46\b9 \n5d6"));
+	printf("%d\n", ft_atoi("\n\n\n  -46\b9 \n5d6"));
+	printassert(ft_atoi("") == atoi(""));
+	printf("%d\n", ft_atoi(""));
 	return (0);
 }
 
@@ -344,6 +443,21 @@ int	test_split(void)
 	// char **result3 = ft_split(s3, ' ');
 	// while (*result3)
 	// 	printf("%s\n", *result3++);
+	// char *s3 = "lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse";
+	// char **result3 = ft_split(s3, ' ');
+	// while (*result3)
+	// 	printf("%s\n", *result3++);
+	char *s4 = "split  ||this|for|me|||||!|";
+	char **result4 = ft_split(s4, '|');
+	char **expected4 = (char*[6]){"split  ", "this", "for", "me", "!", NULL};
+	// while (*result4)
+	// 	printf("%s\n", *result4++);
+	int i = 0;
+	while (result4[i])
+	{
+		printassert((strcmp(result4[i], expected4[i])) == 0);
+		i++;
+	}
 	return (0);
 }
 
@@ -402,8 +516,6 @@ int	test_putendl_fd(void)
 }
 
 
-#define GREEN  "\e[32m"
-#define RESET "\e[0m"
 
 int	main(void)
 {
@@ -426,7 +538,10 @@ int	main(void)
 	printf(GREEN "%d ft_strlcpy		OK\n" RESET, test_strlcpy());
 	printf(GREEN "%d ft_strlcat		OK\n" RESET, test_strlcat());
 	printf(GREEN "%d ft_bzero		OK\n" RESET, test_bzero());
-	printf(GREEN "%d ft_atoi		OK\n" RESET, test_atoi());
+	if (test_atoi() == 1)
+		printf(GREEN "ft_atoi		OK\n" RESET);
+	else if (test_atoi() == 0)
+		test_atoi_print();
 	printf(GREEN "%d ft_strdup		OK\n" RESET, test_strdup());
 	printf(GREEN "%d ft_calloc		OK\n" RESET, test_calloc());
 	printf(GREEN "%d ft_substr		OK\n" RESET, test_substr());
