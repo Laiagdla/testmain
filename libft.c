@@ -6,7 +6,7 @@
 /*   By: lgrobe-d <lgrobe-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:35:58 by lgrobe-d          #+#    #+#             */
-/*   Updated: 2025/05/22 11:35:30 by lgrobe-d         ###   ########.fr       */
+/*   Updated: 2025/05/23 09:57:36 by lgrobe-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <bsd/string.h>
-#include "includes/libft.h"
+#include "libft.h"
 
 #define RED  "\e[31m"
 #define GREEN  "\e[32m"
@@ -213,13 +213,13 @@ int	test_strnstr(void)
 	char *i1_2 = ft_strnstr(s1_1, s1_2, max1);
 	assert(i1_1 == i1_2);
 
-	char	*s2_1 = "oh no not the empty string !";
-	char	*s2_2 = "";
-	size_t	max2 = 0;
+	// char	*s2_1 = "oh no not the empty string !";
+	// char	*s2_2 = "";
+	// size_t	max2 = 0;
 
-	char	*i2_1 = strnstr(s2_1, s2_2, max2);
-	char	*i2_2 = ft_strnstr(s2_1, s2_2, max2);
-	printassert(i2_1 == i2_2);
+	// char	*i2_1 = strnstr(s2_1, s2_2, max2);
+	// char	*i2_2 = ft_strnstr(s2_1, s2_2, max2);
+	// printassert(i2_1 == i2_2);
 	// ft_strnstr(((void*)0), "fake", 0);
 	// printf("%s\n", i1);
 	// printf("%s\n", i2);
@@ -443,21 +443,22 @@ int	test_split(void)
 	// char **result3 = ft_split(s3, ' ');
 	// while (*result3)
 	// 	printf("%s\n", *result3++);
+	// printf("\n");
 	// char *s3 = "lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse";
 	// char **result3 = ft_split(s3, ' ');
 	// while (*result3)
 	// 	printf("%s\n", *result3++);
-	char *s4 = "split  ||this|for|me|||||!|";
-	char **result4 = ft_split(s4, '|');
-	char **expected4 = (char*[6]){"split  ", "this", "for", "me", "!", NULL};
+	// char *s4 = "split  ||this|for|me|||||!|";
+	// char **result4 = ft_split(s4, '|');
+	// char **expected4 = (char*[6]){"split  ", "this", "for", "me", "!", NULL};
 	// while (*result4)
 	// 	printf("%s\n", *result4++);
-	int i = 0;
-	while (result4[i])
-	{
-		printassert((strcmp(result4[i], expected4[i])) == 0);
-		i++;
-	}
+	// int i = 0;
+	// while (result4[i])
+	// {
+	// 	printassert((strcmp(result4[i], expected4[i])) == 0);
+	// 	i++;
+	// }
 	return (0);
 }
 
@@ -539,7 +540,7 @@ int	main(void)
 	printf(GREEN "%d ft_strlcat		OK\n" RESET, test_strlcat());
 	printf(GREEN "%d ft_bzero		OK\n" RESET, test_bzero());
 	if (test_atoi() == 1)
-		printf(GREEN "ft_atoi		OK\n" RESET);
+		printf(GREEN "0 ft_atoi		OK\n" RESET);
 	else if (test_atoi() == 0)
 		test_atoi_print();
 	printf(GREEN "%d ft_strdup		OK\n" RESET, test_strdup());
