@@ -6,7 +6,7 @@
 /*   By: lgrobe-d <lgrobe-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:35:58 by lgrobe-d          #+#    #+#             */
-/*   Updated: 2025/05/23 09:57:36 by lgrobe-d         ###   ########.fr       */
+/*   Updated: 2025/05/30 11:35:19 by lgrobe-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -516,6 +516,69 @@ int	test_putendl_fd(void)
 	return (0);
 }
 
+/* BONUS */
+
+void printList(t_list *head)
+{
+	while (head != NULL)
+	{
+		printf("%d -> ", *(int *)head->content);
+		head = head->next;
+	}
+	printf("NULL\n");
+}
+
+void freeList(t_list *head)
+{
+	t_list *current = head;
+	t_list *next;
+
+	while (current != NULL)
+	{
+		next = current->next;
+		free(current);
+		current = next;
+	}
+}
+
+void delcontent(void *content)
+{
+    free(content);
+}
+
+int	test_bonus(void)
+{
+    t_list *head = NULL;
+    int data1 = 10;
+    int data2 = 20;
+    int data3 = 30;
+	int *data4 = malloc(sizeof(int));
+    *data4 = 88;
+	int data5 = 99;
+
+    t_list *node1 = ft_lstnew(&data1);
+    t_list *node2 = ft_lstnew(&data2);
+    t_list *node3 = ft_lstnew(&data3);
+	t_list *node4 = ft_lstnew(data4);
+	t_list *node5 = ft_lstnew(&data5);
+
+    ft_lstadd_front(&head, node1);
+    ft_lstadd_front(&head, node2);
+    ft_lstadd_front(&head, node3);
+	ft_lstadd_back(&head, node4);
+	ft_lstadd_back(&head, node5);
+
+	// ft_lstdelone(node4, delcontent);
+    printList(head);
+	t_list *nodeLast = ft_lstlast(head);
+	printf("head: %d\n", *(int *)head->content);
+	printf("last: %d\n", *(int *)nodeLast->content);
+	printf("size: %d\n", ft_lstsize(head));
+    freeList(head);
+
+    return 0;
+}
+
 
 
 int	main(void)
@@ -555,5 +618,6 @@ int	main(void)
 	printf(GREEN "%d ft_putchar_fd		OK\n" RESET, test_putchar_fd());
 	printf(GREEN "%d ft_putstr_fd		OK\n" RESET, test_putstr_fd());
 	printf(GREEN "%d ft_putendl_fd		OK\n" RESET, test_putendl_fd());
+	printf(GREEN "%d ft_bonus		OK\n" RESET, test_bonus());
 	return (0);
 }
